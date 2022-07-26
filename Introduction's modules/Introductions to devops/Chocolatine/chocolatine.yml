@@ -1,0 +1,62 @@
+name: chocolatine
+on:
+  push:
+    branches-ignore:
+      - 'ga-ignore-**'
+  pull_request:
+    branches-ignore:
+      - 'ga-ignore-**'
+
+env:
+  MIRROR_URL: https://github.com/Evan-Lab/github-test
+
+jobs:
+  check_repository_cleanliness:
+    runs-on: ubuntu-latest
+    steps:
+      - name: cloning directory into the machine
+        uses: actions/checkout@v3
+      - name: error_output
+        run: echo "::error file=,line=1,endLine=0,title=Check if the repository is clean and void of any unwanted files (temp files, binary files, etc.)::Process completed with exit code 1"
+      - name: check_repository_cleanliness
+        run: |
+            ILLEGAL_FILES_FOUND=0
+            ILLEGAL_FILES="$(find -iname "*~" -o -iname "*pain_au_chocolat*" -o -iname "*#*" -o -iname "*.exe" -o -iname "*.so" -o -iname "*.o" -o -iname "*.gcda" -o -iname "*.gcov" -o -iname "tmp" -o -iname "*.a" -o -iname "*-;" -o -iname "*.gcno" -type f,d)"
+            for FILE in $ILLEGAL_FILES
+            do
+              echo "::error file=$FILE,line=1,endLine=0,title=Unwanted file detected::$FILE"
+              ILLEGAL_FILES_FOUND=1
+            done
+      - name: check_program_compilation
+        uses: docker://alpine:3.8
+      - name: run_tests
+        uses: docker://docker.io/epitechcontent/epitest-docker:latest
+
+  to_gitlab:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: pixta-dev/repository-mirroring-action@v1
+        with:
+          target_repo_url:
+            ${{ env.MIRROR_URL}}
+          ssh_private_key:
+            git@github.com:Evan-Lab/github-test.git
+
+  to_codecommit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - uses: pixta-dev/repository-mirroring-action@v1
+        name: push_to_mirror
+        with:
+          target_repo_url:
+            ${{ env.MIRROR_URL}}
+          ssh_private_key:
+            git@github.com:Evan-Lab/github-test.git
+          ssh_username:
+            ${{ secrets.GIT_SSH_PRIVATE_KEY }}

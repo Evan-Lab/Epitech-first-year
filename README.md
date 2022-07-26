@@ -1,1 +1,1 @@
-# Epitech-first-year
+# Epitech first year projects

@@ -1,0 +1,14 @@
+*.o
+*.a
+*.py
+*.xcf
+*.todo
+my_rpg
+.vscode/*
+res/ogg/mp3/*
+res/ogg/temp_ogg/*
+res/ttf/tmp_fonts/*
+res/img/side_data/*
+res/ogg/temp_main_ogg/*
+res/img/spritesheets/individual_spritesheets/*
+

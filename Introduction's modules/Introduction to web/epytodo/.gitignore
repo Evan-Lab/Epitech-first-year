@@ -1,0 +1,8 @@
+node_modules/*
+bootstrap/*
+.vscode/*
+test/*
+package-lock.json
+index_2.js
+db_2.js
+econfig/*

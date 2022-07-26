@@ -1,0 +1,14 @@
+*.py
+*.o
+*.a
+*.out
+*.txt
+*.sh
+*.code-workspace
+*.todo
+*.xcf
+*.pdf
+*.ove
+temp_data
+my_defender
+Makefile_example*

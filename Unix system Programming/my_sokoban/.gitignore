@@ -1,0 +1,6 @@
+*.o
+sokoban
+libmy.a
+*.txt
+text.txt
+*map

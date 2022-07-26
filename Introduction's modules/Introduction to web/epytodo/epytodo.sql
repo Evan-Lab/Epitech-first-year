@@ -1,0 +1,37 @@
+/* SELECT VERSION 1 */
+
+CREATE DATABASE epytodo;
+
+USE epytodo;
+/* ALTER TABLE IF EXISTS todo
+DROP FOREIGN KEY fk_id; */
+DROP TABLE IF EXISTS todo;
+DROP TABLE IF EXISTS user;
+
+CREATE TABLE IF NOT EXISTS user (
+    id SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    email TEXT NOT NULL UNIQUE,
+    password TEXT NOT NULL,
+    name VARCHAR(100) NOT NULL,
+    firstname VARCHAR(100) NOT NULL,
+    created_at DATETIME NOT NULL,
+    PRIMARY KEY (id)
+);
+
+ALTER TABLE user ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS todo (
+    id SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    title TEXT NOT NULL UNIQUE,
+    description TEXT NOT NULL,
+    created_at DATETIME NOT NULL,
+    due_time DATETIME NOT NULL,
+    status VARCHAR(11) NOT NULL,
+    user_id SMALLINT UNSIGNED NOT NULL,
+    CONSTRAINT fk_id
+        FOREIGN KEY (user_id)
+        REFERENCES user(id),
+    PRIMARY KEY (id)
+);
+
+ALTER TABLE todo ENGINE = InnoDB;

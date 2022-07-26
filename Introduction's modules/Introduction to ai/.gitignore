@@ -1,0 +1,9 @@
+*.o
+ai
+*.tmp
+*.ttmt
+CoppeliaSim_Edu_V4_3_0_Ubuntu20_04
+n4s
+n4s_buffer
+pipes.sh
+n4s_package
